@@ -1,13 +1,15 @@
 #ifndef ERROR_H
 #define ERROR_H
 
+#pragma once
+
 #include <stdint.h>
 #include "./code.hpp"
 
 struct ErrorLexicoStruct
 {
   CODE_ERR code;
-  const char *message;
+  std::string message;
   int64_t line;
   int64_t column;
 };

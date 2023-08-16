@@ -36,7 +36,7 @@ void Lex::addError(CODE_ERR type, std::string message)
 {
   ErrorLexico error;
   error.code = type;
-  error.message = message.c_str();
+  error.message = message;
   error.line = this->line;
   error.column = this->column;
   this->errors.push_back(error);
@@ -161,7 +161,7 @@ void Lex::scanToken(std::string::iterator &it)
   }
 }
 
-void Lex::analizar(std::string &code)
+LexadorReturn Lex::analizar(std::string &code)
 {
   this->line = 1;
   this->column = 1;
@@ -178,14 +178,6 @@ void Lex::analizar(std::string &code)
     this->column++;
     it++;
   }
-  for (auto token : this->tokens)
-  {
-    std::cout << token.lexema << std::endl;
-  }
-  for (auto error : this->errors)
-  {
-    std::cout << error.message << std::endl;
-    std::cout << error.line << std::endl;
-    std::cout << error.column << std::endl;
-  }
+
+  return {this->tokens, this->errors, this->hashArquivo};
 }

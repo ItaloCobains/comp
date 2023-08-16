@@ -11,12 +11,21 @@
 #include "../include/error_type.hpp"
 #include "../include/tokens.hpp"
 
+struct LexadorTypeReturn
+{
+  std::vector<Token> tokens;
+  std::vector<ErrorLexico> errors;
+  u_int64_t hashArquivo;
+};
+
+typedef struct LexadorTypeReturn LexadorReturn;
+
 class Lex
 {
 public:
   Lex();
   ~Lex();
-  void analizar(std::string &code);
+  LexadorReturn analizar(std::string &code);
 
 private:
   int64_t current;
@@ -33,8 +42,7 @@ private:
   u_int64_t nextToken();
   void addToken(Tokens type, std::string lexema, std::any literal);
   void scanToken(std::string::iterator &it);
-  void printErrors();
-  void addError(CODE_ERR type, std::string mesasge);
+  void addError(CODE_ERR type, std::string message);
 };
 
 #endif // LEX_H
