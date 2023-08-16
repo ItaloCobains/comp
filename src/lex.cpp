@@ -32,6 +32,16 @@ void Lex::addToken(Tokens type, std::string lexema, std::any literal)
   this->tokens.push_back(token);
 }
 
+void Lex::addError(CODE_ERR type, std::string message)
+{
+  ErrorLexico error;
+  error.code = type;
+  error.message = message.c_str();
+  error.line = this->line;
+  error.column = this->column;
+  this->errors.push_back(error);
+}
+
 u_int64_t Lex::nextToken()
 {
   return this->current++;
@@ -145,7 +155,7 @@ void Lex::scanToken(std::string::iterator &it)
     }
     else
     {
-      std::cout << "Error lexico en la linea " << this->line << " y columna " << this->column << std::endl;
+      this->addError(CODE_ERR::ERROR_UNKNOW_CHAR, "Caractere desconhecido.");
     }
     break;
   }
@@ -171,5 +181,11 @@ void Lex::analizar(std::string &code)
   for (auto token : this->tokens)
   {
     std::cout << token.lexema << std::endl;
+  }
+  for (auto error : this->errors)
+  {
+    std::cout << error.message << std::endl;
+    std::cout << error.line << std::endl;
+    std::cout << error.column << std::endl;
   }
 }

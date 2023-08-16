@@ -34,7 +34,7 @@ private:
   void addToken(Tokens type, std::string lexema, std::any literal);
   void scanToken(std::string::iterator &it);
   void printErrors();
-  void addError(ErrorLexico type, std::string lexema);
+  void addError(CODE_ERR type, std::string mesasge);
 };
 
 #endif // LEX_H
