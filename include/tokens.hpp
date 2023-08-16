@@ -6,20 +6,13 @@
 #ifndef TOKENS_H
 #define TOKENS_H
 
+#pragma once
+
 #include <string>
 #include <iostream>
 #include <map>
-
-struct TokenStruct
-{
-  Tokens type;
-  std::string value;
-  int64_t line;
-  int64_t column;
-  u_int64_t hashArquivo;
-};
-
-typedef struct TokenStruct Token;
+#include <variant>
+#include <any>
 
 enum Tokens
 {
@@ -31,7 +24,6 @@ enum Tokens
   TOK_NUM = -6,          // number
   TOK_STR = -7,          // string
   TOK_ID = -8,           // identifier
-  TOK_EQUAL = -9,        // =
   TOK_SEMICOLON = -10,   // ;
   TOK_LPAREN = -11,      // (
   TOK_RPAREN = -12,      // )
@@ -54,5 +46,17 @@ enum Tokens
   TOK_NOT = -28,         // !
 
 };
+
+struct TokenStruct
+{
+  Tokens type;
+  std::string lexema;
+  std::any literal;
+  int64_t line;
+  int64_t column;
+  u_int64_t hashArquivo;
+};
+
+typedef struct TokenStruct Token;
 
 #endif // TOKENS_H

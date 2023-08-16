@@ -4,10 +4,11 @@
 #
 
 # define the Cpp compiler to use
-CXX = clang++
+CXX = g++
 
 # define any compile-time flags
-CXXFLAGS	:= -std=c++17 -Wall -Wextra -g -ljsoncpp
+# CXXFLAGS	:= -std=c++17 -Wall -Wextra -g -ljsoncpp
+CXXFLAGS	:= -std=c++2b -Wall -Wextra -g
 
 # define library paths in addition to /usr/lib
 #   if I wanted to include libraries not in /usr/lib I'd specify

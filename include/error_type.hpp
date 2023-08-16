@@ -4,7 +4,7 @@
 #include <stdint.h>
 #include "./code.hpp"
 
-struct ErrorStruct
+struct ErrorLexicoStruct
 {
   CODE_ERR code;
   const char *message;
@@ -12,6 +12,6 @@ struct ErrorStruct
   int64_t column;
 };
 
-typedef struct ErrorStruct Error;
+typedef struct ErrorLexicoStruct ErrorLexico;
 
 #endif // ERROR_H

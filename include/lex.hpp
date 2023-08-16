@@ -4,6 +4,7 @@
 #pragma once
 
 #include <string>
+#include <any>
 #include <stdint.h>
 #include <vector>
 #include <iostream>
@@ -16,22 +17,24 @@ public:
   Lex();
   ~Lex();
   void analizar(std::string &code);
-  void scanToken(std::string::iterator &it);
-  void addToken(Tokens type, std::string lexema);
-  bool match(char c);
-  u_int64_t nextToken();
-  void printErrors();
-  void addError(Error type, std::string lexema);
 
 private:
   int64_t current;
   int64_t start;
   int64_t line;
   int64_t column;
-  std::vector<Error> errors;
+  std::vector<ErrorLexico> errors;
   std::string code;
   std::vector<Token> tokens;
   u_int64_t hashArquivo;
+
+  bool isDigit(char c);
+  bool isAlpha(char c);
+  u_int64_t nextToken();
+  void addToken(Tokens type, std::string lexema, std::any literal);
+  void scanToken(std::string::iterator &it);
+  void printErrors();
+  void addError(ErrorLexico type, std::string lexema);
 };
 
 #endif // LEX_H
