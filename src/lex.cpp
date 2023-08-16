@@ -39,7 +39,7 @@ void Lex::addError(CODE_ERR type, std::string message)
   error.message = message;
   error.line = this->line;
   error.column = this->column;
-  this->errors.push_back(error);
+  this->stackError.push(error);
 }
 
 u_int64_t Lex::nextToken()
@@ -169,8 +169,7 @@ LexadorReturn Lex::analizar(std::string &code)
   this->start = 0;
   this->hashArquivo = 0;
   this->code = code;
-
-  std::cout << this->stackError.i << std::endl;
+  this->stackError.clear();
 
   std::string::iterator it = this->code.begin();
 
@@ -180,6 +179,10 @@ LexadorReturn Lex::analizar(std::string &code)
     this->column++;
     it++;
   }
+  this->addToken(Tokens::TOK_EOF, "", "");
 
-  return {this->tokens, this->errors, this->hashArquivo};
+  if (!this->stackError.empty())
+    this->stackError.report();
+
+  return {this->tokens, this->hashArquivo};
 }

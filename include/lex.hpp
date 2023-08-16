@@ -15,7 +15,6 @@
 struct LexadorTypeReturn
 {
   std::vector<Token> tokens;
-  std::vector<ErrorLexico> errors;
   u_int64_t hashArquivo;
 };
 
@@ -33,7 +32,6 @@ private:
   int64_t start;
   int64_t line;
   int64_t column;
-  std::vector<ErrorLexico> errors;
   std::string code;
   std::vector<Token> tokens;
   u_int64_t hashArquivo;
