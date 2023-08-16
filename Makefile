@@ -1,72 +1,27 @@
-#
-# 'make'        build executable file 'main'
-# 'make clean'  removes all .o and executable files
-#
-
-# define the Cpp compiler to use
 CXX = g++
+CXXFLAGS = -std=c++2b -Wall -Wextra -g
+OUTPUT = output
+SRC = src
+INCLUDE = include
+LIB = lib
 
-# define any compile-time flags
-# CXXFLAGS	:= -std=c++17 -Wall -Wextra -g -ljsoncpp
-CXXFLAGS	:= -std=c++2b -Wall -Wextra -g
+LIBBITWISEHASH_DIR = $(LIB)
+LIBBITWISEHASH = -L$(LIBBITWISEHASH_DIR) -lbitwisehash
 
-# define library paths in addition to /usr/lib
-#   if I wanted to include libraries not in /usr/lib I'd specify
-#   their path using -Lpath, something like:
-LFLAGS =
+MAIN = $(OUTPUT)/main
 
-# define output directory
-OUTPUT	:= output
+SOURCEDIRS = $(shell find $(SRC) -type d)
+INCLUDEDIRS = $(shell find $(INCLUDE) -type d)
 
-# define source directory
-SRC		:= src
-
-# define include directory
-INCLUDE	:= include
-
-# define lib directory
-LIB		:= lib
-
-ifeq ($(OS),Windows_NT)
-MAIN	:= main.exe
-SOURCEDIRS	:= $(SRC)
-INCLUDEDIRS	:= $(INCLUDE)
-LIBDIRS		:= $(LIB)
 FIXPATH = $(subst /,\,$1)
-RM			:= del /q /f
-MD	:= mkdir
-else
-MAIN	:= main
-SOURCEDIRS	:= $(shell find $(SRC) -type d)
-INCLUDEDIRS	:= $(shell find $(INCLUDE) -type d)
-LIBDIRS		:= $(shell find $(LIB) -type d)
-FIXPATH = $1
 RM = rm -f
-MD	:= mkdir -p
-endif
+MD = mkdir -p
 
-# define any directories containing header files other than /usr/include
-INCLUDES	:= $(patsubst %,-I%, $(INCLUDEDIRS:%/=%))
+SOURCES = $(wildcard $(patsubst %,%/*.cpp, $(SOURCEDIRS)))
+OBJECTS = $(SOURCES:.cpp=.o)
+DEPS = $(OBJECTS:.o=.d)
 
-# define the C libs
-LIBS		:= $(patsubst %,-L%, $(LIBDIRS:%/=%))
-
-# define the C source files
-SOURCES		:= $(wildcard $(patsubst %,%/*.cpp, $(SOURCEDIRS)))
-
-# define the C object files
-OBJECTS		:= $(SOURCES:.cpp=.o)
-
-# define the dependency output files
-DEPS		:= $(OBJECTS:.o=.d)
-
-#
-# The following part of the makefile is generic; it can be used to
-# build any executable just by changing the definitions above and by
-# deleting dependencies appended to the file from 'make depend'
-#
-
-OUTPUTMAIN	:= $(call FIXPATH,$(OUTPUT)/$(MAIN))
+OUTPUTMAIN = $(MAIN)  # Correção aqui
 
 all: $(OUTPUT) $(MAIN)
 	@echo Executing 'all' complete!
@@ -75,18 +30,12 @@ $(OUTPUT):
 	$(MD) $(OUTPUT)
 
 $(MAIN): $(OBJECTS)
-	$(CXX) $(CXXFLAGS) $(INCLUDES) -o $(OUTPUTMAIN) $(OBJECTS) $(LFLAGS) $(LIBS)
+	$(CXX) $(CXXFLAGS) $(INCLUDES) -o $(OUTPUTMAIN) $(OBJECTS) $(LIBBITWISEHASH) $(LFLAGS) $(LIBS)
 
-# include all .d files
 -include $(DEPS)
 
-# this is a suffix replacement rule for building .o's and .d's from .c's
-# it uses automatic variables $<: the name of the prerequisite of
-# the rule(a .c file) and $@: the name of the target of the rule (a .o file)
-# -MMD generates dependency output files same name as the .o file
-# (see the gnu make manual section about automatic variables)
 .cpp.o:
-	$(CXX) $(CXXFLAGS) $(INCLUDES) -c -MMD $<  -o $@
+	$(CXX) $(CXXFLAGS) $(INCLUDES) -c -MMD $< -o $@ $(LIBBITWISEHASH)
 
 .PHONY: clean
 clean:
