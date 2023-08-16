@@ -8,8 +8,9 @@
 #include <stdint.h>
 #include <vector>
 #include <iostream>
-#include "../include/error_type.hpp"
-#include "../include/tokens.hpp"
+#include "./error_type.hpp"
+#include "./tokens.hpp"
+#include "./stack-error.hpp"
 
 struct LexadorTypeReturn
 {
@@ -23,7 +24,7 @@ typedef struct LexadorTypeReturn LexadorReturn;
 class Lex
 {
 public:
-  Lex();
+  Lex(StackError &stackError);
   ~Lex();
   LexadorReturn analizar(std::string &code);
 
@@ -36,6 +37,7 @@ private:
   std::string code;
   std::vector<Token> tokens;
   u_int64_t hashArquivo;
+  StackError &stackError;
 
   bool isDigit(char c);
   bool isAlpha(char c);

@@ -5,6 +5,7 @@
 
 #include <stdint.h>
 #include "./code.hpp"
+#include <string>
 
 struct ErrorLexicoStruct
 {

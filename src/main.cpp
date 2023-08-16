@@ -16,11 +16,12 @@ int main(int argc, char *argv[])
     verificaArgs(argc, argv);
 
     FileReader reader(argv[1]);
-    Lex lex;
+    StackError stackError;
+    Lex lex(stackError);
 
     std::string conteudoArquivo = reader.readWholeFileToString();
 
-    lex.analizar(conteudoArquivo);
+    LexadorReturn retornoLexador = lex.analizar(conteudoArquivo);
 
     return 0;
 }
