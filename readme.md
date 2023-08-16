@@ -1,3 +1,13 @@
+```c++
+const char *input_string = "sua_string_aqui"; // Substitua pela string desejada
+size_t input_length = strlen(input_string);
+unsigned long long int hash_value;
+
+calculate_bitwise_hash(input_string, input_length, &hash_value);
+
+std::cout << "Valor inteiro do hash: " << hash_value << std::endl;
+```
+
 lib
 
 make .hpp
