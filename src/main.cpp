@@ -1,37 +1,40 @@
 #include <iostream>
-#include "../include/file-read.hpp"
+#include "../include/gerenciador_arquivo.hpp"
 #include "../include/lex.hpp"
 #include "../include/bitwise_hash.h"
 #include <cstring>
+#include <fstream>
 
 void verificaArgs(int argc, char *argv[])
 {
-    if (argc < 2)
-    {
-        std::cout << "Usage: " << argv[0] << " <filename>" << std::endl;
-        exit(1);
-    }
+  if (argc < 2)
+  {
+    std::cout << "Usage: " << argv[0] << " <filename>" << std::endl;
+    exit(1);
+  }
 }
 
 int main(int argc, char *argv[])
 {
-    verificaArgs(argc, argv);
 
-    FileReader reader(argv[1]);
-    StackError stackError;
-    Lex lex(stackError);
+  verificaArgs(argc, argv);
 
-    std::string conteudoArquivo = reader.readWholeFileToString();
+  GerenciadorArquivo::Arquivo arquivo(argv[1]);
 
-    LexadorReturn retornoLexador = lex.analizar(conteudoArquivo);
+  if (!arquivo.abrir())
+  {
+    std::cout << "Erro ao abrir o arquivo " << argv[1] << std::endl;
+    exit(1);
+  }
 
-    const char *input_string = "sua_string_aqui"; // Substitua pela string desejada
-    size_t input_length = strlen(input_string);
-    unsigned long long int hash_value;
+  std::string linhas = arquivo.lerConteudo();
 
-    // calculate_bitwise_hash(input_string, input_length, &hash_value);
+  arquivo.fechar();
 
-    // std::cout << "Valor inteiro do hash: " << hash_value << std::endl;
+  StackErrorLex stackError;
+  Lex lex(stackError);
 
-    return 0;
+  LexadorReturn retornoLexador = lex.analizar(linhas);
+
+  return 0;
 }

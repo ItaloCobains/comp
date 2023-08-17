@@ -1,36 +1,36 @@
 #include "../include/stack-error.hpp"
 
-StackError::StackError()
+StackErrorLex::StackErrorLex()
 {
 }
 
-StackError::~StackError()
+StackErrorLex::~StackErrorLex()
 {
 }
 
-void StackError::push(std::variant<ErrorLexico, std::nullptr_t> error)
+void StackErrorLex::push(std::variant<ErrorLexico, std::nullptr_t> error)
 {
   this->stack.push(error);
 }
 
-std::variant<ErrorLexico, std::nullptr_t> StackError::pop()
+std::variant<ErrorLexico, std::nullptr_t> StackErrorLex::pop()
 {
   std::variant<ErrorLexico, std::nullptr_t> error = this->stack.top();
   this->stack.pop();
   return error;
 }
 
-std::variant<ErrorLexico, std::nullptr_t> StackError::top()
+std::variant<ErrorLexico, std::nullptr_t> StackErrorLex::top()
 {
   return this->stack.top();
 }
 
-bool StackError::empty()
+bool StackErrorLex::empty()
 {
   return this->stack.empty();
 }
 
-void StackError::report()
+void StackErrorLex::report()
 {
   std::cout << "Erros encontrados:" << std::endl;
   while (!this->stack.empty())
@@ -48,7 +48,7 @@ void StackError::report()
   exit(1);
 }
 
-void StackError::clear()
+void StackErrorLex::clear()
 {
   while (!this->stack.empty())
   {

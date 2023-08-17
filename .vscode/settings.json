@@ -57,7 +57,8 @@
     "typeinfo": "cpp",
     "valarray": "cpp",
     "any": "cpp",
-    "variant": "cpp"
+    "variant": "cpp",
+    "cinttypes": "cpp"
   },
   "[python]": {
     "editor.defaultFormatter": "ms-python.autopep8"

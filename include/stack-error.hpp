@@ -11,11 +11,11 @@
 #include "./error_type.hpp"
 #include "./code.hpp"
 
-class StackError
+class StackErrorLex
 {
 public:
-  StackError();
-  ~StackError();
+  StackErrorLex();
+  ~StackErrorLex();
 
   void push(std::variant<ErrorLexico, std::nullptr_t> error);
   std::variant<ErrorLexico, std::nullptr_t> pop();

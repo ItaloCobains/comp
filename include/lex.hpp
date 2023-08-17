@@ -23,7 +23,7 @@ typedef struct LexadorTypeReturn LexadorReturn;
 class Lex
 {
 public:
-  Lex(StackError &stackError);
+  Lex(StackErrorLex &stackErrorLex);
   ~Lex();
   LexadorReturn analizar(std::string &code);
 
@@ -35,7 +35,7 @@ private:
   std::string code;
   std::vector<Token> tokens;
   u_int64_t hashArquivo;
-  StackError &stackError;
+  StackErrorLex &stackErrorLex;
 
   bool isDigit(char c);
   bool isAlpha(char c);
@@ -43,6 +43,9 @@ private:
   void addToken(Tokens type, std::string lexema, std::any literal);
   void scanToken(std::string::iterator &it);
   void addError(CODE_ERR type, std::string message);
+  void string();
+  bool isAtEnd();
+  void avancar();
 };
 
 #endif // LEX_H

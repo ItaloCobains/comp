@@ -1,11 +1,16 @@
 #include "../include/lex.hpp"
 
-Lex::Lex(StackError &stackError) : stackError(stackError)
+Lex::Lex(StackErrorLex &stackError) : stackErrorLex(stackError)
 {
 }
 
 Lex::~Lex()
 {
+}
+
+void Lex::avancar()
+{
+  this->current++;
 }
 
 bool Lex::isDigit(char c)
@@ -39,7 +44,30 @@ void Lex::addError(CODE_ERR type, std::string message)
   error.message = message;
   error.line = this->line;
   error.column = this->column;
-  this->stackError.push(error);
+  this->stackErrorLex.push(error);
+}
+
+bool Lex::isAtEnd()
+{
+  return this->current >= this->code.length();
+}
+
+void Lex::string()
+{
+  while (this->code[this->current] != '"')
+  {
+    if (this->isAtEnd())
+    {
+      this->addError(CODE_ERR::ERROR_UNTERMINATED_STRING, "String não terminada.");
+      return;
+    }
+    if (this->code[this->current] == '\n')
+      this->line++;
+    this->current++;
+  }
+
+  std::string value = this->code.substr(this->start + 1, this->current - this->start - 1);
+  this->addToken(Tokens::TOK_STR, value, value);
 }
 
 u_int64_t Lex::nextToken()
@@ -139,9 +167,10 @@ void Lex::scanToken(std::string::iterator &it)
     this->line++;
     this->column = 1;
     break;
-  // case '"':
-  //   this->string();
-  //   break;
+  case '\"':
+    this->avancar();
+    this->string();
+    break;
   default:
     if (this->isDigit(c))
     {
@@ -169,20 +198,21 @@ LexadorReturn Lex::analizar(std::string &code)
   this->start = 0;
   this->hashArquivo = 0;
   this->code = code;
-  this->stackError.clear();
+  this->stackErrorLex.clear();
 
   std::string::iterator it = this->code.begin();
 
-  while (it != this->code.end())
+  while (this->current < this->code.length())
   {
     this->scanToken(it);
     this->column++;
-    it++;
+    this->start = this->current;
+    this->current++;
   }
   this->addToken(Tokens::TOK_EOF, "", "");
 
-  if (!this->stackError.empty())
-    this->stackError.report();
+  if (!this->stackErrorLex.empty())
+    this->stackErrorLex.report();
 
   return {this->tokens, this->hashArquivo};
 }
