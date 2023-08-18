@@ -41,7 +41,7 @@ private:
   bool isAlpha(char c);
   u_int64_t nextToken();
   void addToken(Tokens type, std::string lexema, std::any literal);
-  void scanToken(std::string::iterator &it);
+  void scanToken(char c);
   void addError(CODE_ERR type, std::string message);
   void string();
   bool isAtEnd();

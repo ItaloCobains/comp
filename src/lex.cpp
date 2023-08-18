@@ -64,6 +64,7 @@ void Lex::string()
     if (this->code[this->current] == '\n')
       this->line++;
     this->current++;
+    this->column++;
   }
 
   std::string value = this->code.substr(this->start + 1, this->current - this->start - 1);
@@ -75,9 +76,8 @@ u_int64_t Lex::nextToken()
   return this->current++;
 }
 
-void Lex::scanToken(std::string::iterator &it)
+void Lex::scanToken(char c)
 {
-  char c = *it;
   switch (c)
   {
   case '(':
@@ -167,6 +167,7 @@ void Lex::scanToken(std::string::iterator &it)
     this->line++;
     this->column = 1;
     break;
+  case '\'':
   case '\"':
     this->avancar();
     this->string();
@@ -200,11 +201,9 @@ LexadorReturn Lex::analizar(std::string &code)
   this->code = code;
   this->stackErrorLex.clear();
 
-  std::string::iterator it = this->code.begin();
-
   while (this->current < this->code.length())
   {
-    this->scanToken(it);
+    this->scanToken(this->code[this->current]);
     this->column++;
     this->start = this->current;
     this->current++;
