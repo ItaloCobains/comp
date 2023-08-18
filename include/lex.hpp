@@ -23,7 +23,7 @@ typedef struct LexadorTypeReturn LexadorReturn;
 class Lex
 {
 public:
-  Lex(StackErrorLex &stackErrorLex);
+  Lex(StackErrorLex &stackErrorLex, unsigned long long int hashArquivo = 0);
   ~Lex();
   LexadorReturn analizar(std::string &code);
 

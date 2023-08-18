@@ -6,6 +6,8 @@
 #include <string>
 #include <iostream>
 #include <fstream>
+#include <cstdlib>
+#include <limits.h>
 
 namespace GerenciadorArquivo
 {
@@ -16,6 +18,7 @@ namespace GerenciadorArquivo
     bool abrir();
     void fechar();
     std::string lerConteudo();
+    std::string caminho_completo;
 
   private:
     std::string nome_arquivo_;

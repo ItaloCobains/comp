@@ -2,7 +2,18 @@
 
 namespace GerenciadorArquivo
 {
-  Arquivo::Arquivo(const std::string &nome_arquivo) : nome_arquivo_(nome_arquivo), arquivo_aberto_(false) {}
+  Arquivo::Arquivo(const std::string &nome_arquivo) : nome_arquivo_(nome_arquivo), arquivo_aberto_(false)
+  {
+    char resolvedPath[PATH_MAX];
+
+    if (realpath(nome_arquivo.c_str(), resolvedPath) == NULL)
+    {
+      std::cerr << "Erro ao obter caminho absoluto do arquivo: " << nome_arquivo << std::endl;
+      std::exit(EXIT_FAILURE);
+    }
+
+    caminho_completo = std::string(resolvedPath);
+  }
 
   bool Arquivo::abrir()
   {

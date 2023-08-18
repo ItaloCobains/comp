@@ -1,9 +1,10 @@
 #include <iostream>
-#include "../include/gerenciador_arquivo.hpp"
-#include "../include/lex.hpp"
-#include "../include/bitwise_hash.h"
 #include <cstring>
 #include <fstream>
+
+#include "../include/lex.hpp"
+#include "../include/gerenciador_arquivo.hpp"
+#include "../include/gera_hashArquivo.hpp"
 
 void verificaArgs(int argc, char *argv[])
 {
@@ -29,12 +30,11 @@ int main(int argc, char *argv[])
 
   std::string linhas = arquivo.lerConteudo();
 
-  arquivo.fechar();
-
   StackErrorLex stackError;
-  Lex lex(stackError);
+  Lex lex(stackError, Gera_hashArquivo::gera_hashArquivo(arquivo.caminho_completo.c_str(), arquivo.caminho_completo.length()));
 
   LexadorReturn retornoLexador = lex.analizar(linhas);
 
+  arquivo.fechar();
   return 0;
 }

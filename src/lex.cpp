@@ -1,6 +1,6 @@
 #include "../include/lex.hpp"
 
-Lex::Lex(StackErrorLex &stackError) : stackErrorLex(stackError)
+Lex::Lex(StackErrorLex &stackError, unsigned long long int hashArquivo) : stackErrorLex(stackError), hashArquivo(hashArquivo)
 {
 }
 
@@ -197,7 +197,6 @@ LexadorReturn Lex::analizar(std::string &code)
   this->column = 1;
   this->current = 0;
   this->start = 0;
-  this->hashArquivo = 0;
   this->code = code;
   this->stackErrorLex.clear();
 
