@@ -33,7 +33,7 @@ int main(int argc, char *argv[])
   StackErrorLex stackError;
   Lex lex(stackError, Gera_hashArquivo::gera_hashArquivo(arquivo.caminho_completo.c_str(), arquivo.caminho_completo.length()));
 
-  LexadorReturn retornoLexador = lex.analizar(linhas);
+  // LexadorReturn retornoLexador = lex.analizar(linhas);
 
   arquivo.fechar();
   return 0;
