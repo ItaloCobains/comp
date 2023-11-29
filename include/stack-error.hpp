@@ -3,16 +3,15 @@
 
 #pragma once
 
-#include <stdint.h>
-#include <stack>
-#include <iostream>
-#include <any>
-#include <variant>
-#include "./error_type.hpp"
 #include "./code.hpp"
+#include "./error_type.hpp"
+#include <any>
+#include <iostream>
+#include <stack>
+#include <stdint.h>
+#include <variant>
 
-class StackErrorLex
-{
+class StackErrorLex {
 public:
   StackErrorLex();
   ~StackErrorLex();

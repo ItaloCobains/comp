@@ -3,12 +3,11 @@
 
 #pragma once
 
-#include <stdint.h>
 #include "./code.hpp"
+#include <stdint.h>
 #include <string>
 
-struct ErrorLexicoStruct
-{
+struct ErrorLexicoStruct {
   CODE_ERR code;
   std::string message;
   int64_t line;

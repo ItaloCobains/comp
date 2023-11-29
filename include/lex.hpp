@@ -3,25 +3,23 @@
 
 #pragma once
 
-#include <string>
-#include <any>
-#include <stdint.h>
-#include <vector>
-#include <iostream>
 #include "./error_type.hpp"
-#include "./tokens.hpp"
 #include "./stack-error.hpp"
+#include "./tokens.hpp"
+#include <any>
+#include <iostream>
+#include <stdint.h>
+#include <string>
+#include <vector>
 
-struct LexadorTypeReturn
-{
+struct LexadorTypeReturn {
   std::vector<Token> tokens;
   u_int64_t hashArquivo;
 };
 
 typedef struct LexadorTypeReturn LexadorReturn;
 
-class Lex
-{
+class Lex {
 public:
   Lex(StackErrorLex &stackErrorLex, unsigned long long int hashArquivo = 0);
   ~Lex();
@@ -46,6 +44,8 @@ private:
   void string();
   bool isAtEnd();
   void avancar();
+  void identifier();
+  void number();
 };
 
 #endif // LEX_H
