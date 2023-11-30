@@ -58,7 +58,9 @@
     "valarray": "cpp",
     "any": "cpp",
     "variant": "cpp",
-    "cinttypes": "cpp"
+    "cinttypes": "cpp",
+    "unordered_set": "cpp",
+    "optional": "cpp"
   },
   "[python]": {
     "editor.defaultFormatter": "ms-python.autopep8"
