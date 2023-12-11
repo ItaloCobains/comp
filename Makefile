@@ -1,4 +1,4 @@
-CXX = g++
+CXX = clang++ 
 CXXFLAGS = -std=c++2b -Wall -Wextra -g
 OUTPUT = output
 SRC = src

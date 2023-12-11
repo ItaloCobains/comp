@@ -1,0 +1,7 @@
+*.h linguist-language=Assembly
+*.hpp linguist-language=Assembly
+*.cpp linguist-language=C++
+*.c linguist-language=C
+*.py linguist-language=Python
+Makefile linguist-language=Makefile
+*.sh linguist-language=Shell

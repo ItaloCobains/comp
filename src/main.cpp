@@ -5,17 +5,14 @@
 #include "../include/gerenciador_arquivo.hpp"
 #include "../include/lex.hpp"
 
-void verificaArgs(int argc, char *argv[])
-{
-  if (argc < 2)
-  {
+void verificaArgs(int argc, char *argv[]) {
+  if (argc < 2) {
     std::cout << "Usage: " << argv[0] << " <filename>" << std::endl;
     exit(1);
   }
 }
 
-int main(int argc, char *argv[])
-{
+int main(int argc, char *argv[]) {
   AST ast;
 
   // Criar nós
@@ -34,13 +31,14 @@ int main(int argc, char *argv[])
 
   GerenciadorArquivo::Arquivo arquivo(argv[1]);
 
-  if (!arquivo.abrir())
-  {
+  if (!arquivo.abrir()) {
     std::cout << "Erro ao abrir o arquivo " << argv[1] << std::endl;
     exit(1);
   }
 
   std::string linhas = arquivo.lerConteudo();
+
+  arquivo.fechar();
 
   StackErrorLex stackError;
   Lex lex(stackError, Gera_hashArquivo::gera_hashArquivo(
@@ -50,17 +48,14 @@ int main(int argc, char *argv[])
   LexadorReturn retornoLexador = lex.analizar(linhas);
 
   std::cout << "Tokens: " << std::endl;
-  for (auto token : retornoLexador.tokens)
-  {
+  for (auto token : retornoLexador.tokens) {
     std::cout << token.type << std::endl;
   }
 
   std::cout << "Lexemas: " << std::endl;
-  for (auto token : retornoLexador.tokens)
-  {
+  for (auto token : retornoLexador.tokens) {
     std::cout << token.lexema << std::endl;
   }
 
-  arquivo.fechar();
   return 0;
 }
