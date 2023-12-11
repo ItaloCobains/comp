@@ -3,11 +3,9 @@
 
 #pragma once
 
-#include "./error_type.hpp"
 #include "./stack-error.hpp"
 #include "./tokens.hpp"
 #include <any>
-#include <iostream>
 #include <stdint.h>
 #include <string>
 #include <vector>

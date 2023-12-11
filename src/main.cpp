@@ -4,6 +4,7 @@
 #include "../include/gera_hashArquivo.hpp"
 #include "../include/gerenciador_arquivo.hpp"
 #include "../include/lex.hpp"
+#include "../include/parser.hpp"
 
 void verificaArgs(int argc, char *argv[]) {
   if (argc < 2) {
